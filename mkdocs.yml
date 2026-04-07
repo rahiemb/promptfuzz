@@ -1,0 +1,10 @@
+site_name: PromptFuzz Documentation
+repo_url: https://github.com/promptfuzz/promptfuzz
+nav:
+  - Welcome: index.md
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: blue
+    accent: light blue

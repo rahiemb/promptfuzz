@@ -1,0 +1,65 @@
+:root {
+  --bg-main: #0d1117;
+  --text-main: #c9d1d9;
+  --navbar-bg: rgba(22, 27, 34, 0.85);
+  --border-color: #30363d;
+  --card-bg-default: rgba(22, 27, 34, 0.6);
+  --card-bg-hover: rgba(22, 27, 34, 0.9);
+  
+  /* Overriding Bootstrap text colors */
+  --color-primary: #58a6ff;
+  --color-danger: #f85149;
+  --color-warning: #d29922;
+  --color-info: #2f81f7;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-main) !important;
+  color: var(--text-main) !important;
+}
+
+/* Utilities overrides */
+.text-primary { color: var(--color-primary) !important; }
+.text-danger { color: var(--color-danger) !important; }
+.text-warning { color: var(--color-warning) !important; }
+.text-info { color: var(--color-info) !important; }
+.text-muted { color: #8b949e !important; }
+
+.navbar {
+  background: var(--navbar-bg);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-color);
+}
+.navbar-brand {
+  font-weight: 800;
+  color: var(--color-primary) !important;
+  letter-spacing: -0.5px;
+}
+
+.card-glass {
+  background: var(--card-bg-default);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  backdrop-filter: blur(12px);
+  transition: transform 0.2s, background 0.2s;
+}
+.card-glass:hover {
+  transform: translateY(-4px);
+  background: var(--card-bg-hover);
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* Animation */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-up {
+  animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

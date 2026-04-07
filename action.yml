@@ -1,0 +1,52 @@
+name: 'PromptFuzz Security Scan'
+description: 'Runs PromptFuzz to detect adversarial vulnerabilities in your LLM application'
+inputs:
+  model:
+    description: 'The target model identifier (e.g., gpt-4o)'
+    required: true
+  api-key:
+    description: 'API key for the target model'
+    required: true
+  base-url:
+    description: 'Base URL for custom endpoints'
+    required: false
+    default: ''
+  config:
+    description: 'Path to PromptFuzz YAML config file'
+    required: false
+    default: ''
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Install PromptFuzz
+      run: pip install promptfuzz
+      shell: bash
+
+    - name: Run PromptFuzz Scan
+      run: |
+        CMD="promptfuzz scan"
+        if [ -n "${{ inputs.model }}" ]; then
+          CMD="$CMD --model ${{ inputs.model }}"
+        fi
+        if [ -n "${{ inputs.config }}" ]; then
+          CMD="$CMD --config ${{ inputs.config }}"
+        fi
+        if [ -n "${{ inputs.base-url }}" ]; then
+          CMD="$CMD --base-url ${{ inputs.base-url }}"
+        fi
+        
+        # Execute the scan, propagating failures
+        LITELLM_API_KEY="${{ inputs.api-key }}" eval $CMD
+      shell: bash
+
+    - name: Upload SARIF report
+      uses: github/codeql-action/upload-sarif@v3
+      if: always()
+      with:
+        sarif_file: promptfuzz-results/promptfuzz.sarif

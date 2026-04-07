@@ -1,0 +1,20 @@
+targets:
+- model: gpt-4o-mini
+  api_key: ${LITELLM_API_KEY}
+  base_url: ''
+  system_prompt: You are a helpful assistant.
+attacks:
+- all
+detectors:
+- keyword
+mutators:
+- synonym_swap
+- role_play
+mutation_depth: 2
+mutation_breadth: 3
+max_concurrent: 5
+rate_limit_rps: 10
+output_format:
+- console
+- json
+output_dir: ./promptfuzz-results
